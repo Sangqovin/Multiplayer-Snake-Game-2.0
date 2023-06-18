@@ -6,10 +6,30 @@ const { makeid } = require("./backend/utils");
 const state = {};
 const clientRooms = {};
 
+function getRandomColor() {
+  // Generate a random hexadecimal value
+  var color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+
+  return color;
+}
+function getRandomColor2() {
+  // Generate a random hexadecimal value
+  var color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+
+  return color;
+}
+
+
 io.on("connection", (client) => {
   client.on("keydown", handleKeydown);
   client.on("newGame", handleNewGame);
   client.on("joinGame", handleJoinGame);
+
+  const player1Color = getRandomColor();
+  const player2Color = getRandomColor2();
+
+  // client.emit("playerColor", { playerId: 0, color: player1Color });
+  // client.emit("playerColor", { playerId: 1, color: player2Color });
 
   function handleJoinGame(roomName) {
     const room = io.sockets.adapter.rooms[roomName];

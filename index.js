@@ -10,9 +10,16 @@ function getRandomColor() {
   return color;
 }
 
+function getRandomColor2() {
+  // Generate a random hexadecimal value
+  var color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+
+  return color;
+}
+
 // Usage
 var PLAYER1_COLOUR = getRandomColor();
-var PLAYER2_COLOUR = getRandomColor();
+var PLAYER2_COLOUR = getRandomColor2();
 
 
 const socket = io("http://localhost:3000");
@@ -81,7 +88,14 @@ function paintGame(state) {
 
   paintPlayer(state.players[0], size, PLAYER1_COLOUR);
   paintPlayer(state.players[1], size, PLAYER2_COLOUR);
+
+  // socket.on("playerColor", (data) => {
+  //   const { playerId, color } = data;
+  //   state.players[playerId].color = color;
+  //   paintGame(state);
+  // });
 }
+
 
 function paintPlayer(playerState, size, colour) {
   const snake = playerState.snake;
