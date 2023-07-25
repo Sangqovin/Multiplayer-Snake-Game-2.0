@@ -1,6 +1,6 @@
 const BG_COLOUR = "#231f20";
-// const PLAYER1_COLOUR = "#c2c2c2";
-// const PLAYER2_COLOUR = "#c2c2c2";
+const PLAYER1_COLOUR = "blue";
+const PLAYER2_COLOUR = "red";
 const FOOD_COLOUR = "#e66916";
 
 function getRandomColor() {
@@ -18,9 +18,8 @@ function getRandomColor2() {
 }
 
 // Usage
-var PLAYER1_COLOUR = getRandomColor();
-var PLAYER2_COLOUR = getRandomColor2();
-
+// var PLAYER1_COLOUR = "#FFFFFF"; // getRandomColor();
+// var PLAYER2_COLOUR = getRandomColor2();
 
 const socket = io("http://localhost:3000");
 
@@ -62,7 +61,7 @@ function init() {
   canvas = document.getElementById("canvas");
   ctx = canvas.getContext("2d");
 
-  canvas.width = canvas.height = 600;
+  canvas.width = canvas.height = 500;
 
   ctx.fillStyle = BG_COLOUR;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -89,13 +88,12 @@ function paintGame(state) {
   paintPlayer(state.players[0], size, PLAYER1_COLOUR);
   paintPlayer(state.players[1], size, PLAYER2_COLOUR);
 
-  // socket.on("playerColor", (data) => {
-  //   const { playerId, color } = data;
-  //   state.players[playerId].color = color;
-  //   paintGame(state);
-  // });
+  socket.on("playerColor", (data) => {
+    const { playerId, color } = data;
+    state.players[playerId].color = color;
+    paintGame(state);
+  });
 }
-
 
 function paintPlayer(playerState, size, colour) {
   const snake = playerState.snake;

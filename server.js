@@ -19,7 +19,6 @@ function getRandomColor2() {
   return color;
 }
 
-
 io.on("connection", (client) => {
   client.on("keydown", handleKeydown);
   client.on("newGame", handleNewGame);
