@@ -81,7 +81,7 @@ function gameLoop(state) {
     playerTwo.pos.y > GRID_SIZE
   ) {
     playerTwo.pos.x !== playerTwo.prevPos.x ||
-      playerTwo.pos.y !== playerTwo.prevPos.y;
+    playerTwo.pos.y !== playerTwo.prevPos.y;
     return 2;
   }
 
