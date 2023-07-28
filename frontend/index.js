@@ -57,7 +57,7 @@ function joinGame() {
 
 let canvas, ctx;
 let playerNumber;
-let gameActive
+let gameActive;
 
 function init() {
   initialScreen.style.display = "none";
