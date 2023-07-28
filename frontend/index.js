@@ -32,6 +32,8 @@ socket.on("gameOver", handleGameOver);
 socket.on("gameCode", handleGameCode);
 socket.on("unknownGame", handleUnknownGame);
 socket.on("tooManyPlayers", handleTooManyPlayers);
+socket.on("randomColor", handleRandomColor);
+socket.on("randomColor2", handleRandomColor2);
 
 const gameScreen = document.getElementById("gameScreen");
 const initialScreen = document.getElementById("initialScreen");
@@ -106,10 +108,12 @@ function paintGame(state) {
 
 function drawPlayer(state, size, color) {
   paintPlayer(state, size, color);
+  console.log(playerColor2);
 }
 
 function drawPlayer2(state, size, color) {
   paintPlayer(state, size, color);
+  console.log(playerColor2);
 }
 
 function handleInit(number) {

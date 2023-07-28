@@ -2,8 +2,8 @@ const io = require("socket.io")();
 const { initGame, gameLoop, getUpdatedVelocity } = require("./backend/game");
 const { FRAME_RATE } = require("./backend/constants");
 const { makeid } = require("./backend/utils");
-let playerColor;
-let playerColor2;
+let playerColor = getRandomColor();
+let playerColor2 = getRandomColor2();
 
 const state = {};
 const clientRooms = {};
@@ -37,8 +37,9 @@ io.on("connection", (client) => {
   client.on("disconnect", () => {
     playerColor = getRandomColor();
     playerColor2 = getRandomColor2();
-    io.emit("randomColor2", playerColor2);
+
     io.emit("randomColor", playerColor);
+    io.emit("randomColor2", playerColor2);
   });
 
   function handleJoinGame(roomName) {
