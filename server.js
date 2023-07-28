@@ -23,7 +23,7 @@ function handleRandomColor(color) {
 }
 
 function handleRandomColor2(color2) {
-  playerColor2 = color2
+  playerColor2 = color2;
 }
 
 io.on("connection", (client) => {
@@ -31,8 +31,8 @@ io.on("connection", (client) => {
   client.on("newGame", handleNewGame);
   client.on("joinGame", handleJoinGame);
 
-  client.emit("randomColor", handleRandomColor);
-  client.emit("randomColor2", handleRandomColor2);
+  client.emit("randomColor", playerColor);
+  client.emit("randomColor2", playerColor2);
 
   client.on("disconnect", () => {
     playerColor = getRandomColor();
@@ -132,3 +132,5 @@ function emitGameOver(room, winner) {
 }
 
 io.listen(3000);
+
+console.log("Ready!");

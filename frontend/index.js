@@ -1,8 +1,8 @@
-const socket = io("http://localhost:3000");
 const BG_COLOUR = "#231f20";
 const FOOD_COLOUR = "#e66916";
 let playerColor;
 let playerColor2;
+const socket = io("http://localhost:3000");
 
 function getRandomColor() {
   var color = "#" + Math.floor(Math.random() * 16777215).toString(16);
@@ -104,12 +104,10 @@ function paintGame(state) {
 
 function drawPlayer(state, size, color) {
   paintPlayer(state, size, color);
-  console.log(playerColor2);
 }
 
 function drawPlayer2(state, size, color) {
   paintPlayer(state, size, color);
-  console.log(playerColor2);
 }
 
 function handleInit(number) {
