@@ -1,7 +1,8 @@
 const BG_COLOUR = "#231f20";
-const PLAYER1_COLOUR = "blue";
-const PLAYER2_COLOUR = "red";
+// const PLAYER1_COLOUR = "blue";
+// const PLAYER2_COLOUR = "red";
 const FOOD_COLOUR = "#e66916";
+let playerColor;
 
 function getRandomColor() {
   // Generate a random hexadecimal value
@@ -17,16 +18,26 @@ function getRandomColor2() {
   return color;
 }
 
+const randomColorsArray = [];
+
+for (var i = 0; i < 2; i++) {
+  const randomColor = getRandomColor();
+  randomColorsArray.push(randomColor);
+}
+
 const socket = io("http://localhost:3000");
 
+const PLAYER1_COLOUR = getRandomColor();
+const PLAYER2_COLOUR = getRandomColor2();
 socket.on("init", handleInit);
 socket.on("gameState", handleGameState);
 socket.on("gameOver", handleGameOver);
 socket.on("gameCode", handleGameCode);
 socket.on("unknownGame", handleUnknownGame);
 socket.on("tooManyPlayers", handleTooManyPlayers);
-socket.on("playerColor", handlePlayerColor);
-socket.on("playerColor2", handlePlayerColor2);
+socket.on("randomColor", (color) => {
+  playerColor = color;
+});
 
 const gameScreen = document.getElementById("gameScreen");
 const initialScreen = document.getElementById("initialScreen");
@@ -75,6 +86,18 @@ function keydown(e) {
   socket.emit("keydown", e.keyCode);
 }
 
+function paintPlayer(playerState, size, colour) {
+  const snake = playerState.snake;
+
+  ctx.fillStyle = colour;
+  for (let cell of snake) {
+    ctx.fillRect(cell.x * size, cell.y * size, size, size);
+  }
+}
+
+const player1color = randomColorsArray[0];
+const player2color = randomColorsArray[1];
+
 function paintGame(state) {
   ctx.fillStyle = BG_COLOUR;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -86,40 +109,17 @@ function paintGame(state) {
   ctx.fillStyle = FOOD_COLOUR;
   ctx.fillRect(food.x * size, food.y * size, size, size);
 
-  // paintPlayer(0);
-  // paintPlayer(1);
-
-  // socket.on("playerColor", (data) => {
-  //   const { playerId, color } = data;
-  //   state.players[playerId].color = color;
-  //   paintGame(state);
-  // });
+  drawPlayer(state.players[0], size, playerColor);
+  drawPlayer2(state.players[1], size, playerColor);
+  console.log(playerColor);
 }
 
-function paintPlayer(playerState, size, colour) {
-  const snake = playerState.snake;
-
-  ctx.fillStyle = colour;
-  for (let cell of snake) {
-    ctx.fillRect(cell.x * size, cell.y * size, size, size);
-  }
-  // socket.on("playerColor", (handlePlayerColor) => {
-  //   console.log(data.color);
-  //   paintPlayer(state.players[0], size, data.color);
-  // });
-
-  // socket.on("playerColor2", (data) => {
-  //   console.log(data.color);
-  //   paintPlayer(state.players[1], size, data.color);
-  // });
+function drawPlayer(state, size, color) {
+  paintPlayer(state, size, color);
 }
 
-function handlePlayerColor(data) {
-  paintPlayer(state.players[0], size, data.color);
-}
-
-function handlePlayerColor2(data) {
-  paintPlayer(state.players[1], size, data.color);
+function drawPlayer2(state, size, color) {
+  paintPlayer(state, size, color);
 }
 
 function handleInit(number) {
