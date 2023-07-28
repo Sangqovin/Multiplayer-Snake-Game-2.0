@@ -2,12 +2,20 @@ const io = require("socket.io")();
 const { initGame, gameLoop, getUpdatedVelocity } = require("./backend/game");
 const { FRAME_RATE } = require("./backend/constants");
 const { makeid } = require("./backend/utils");
-let playerColor;
+let playerColor = getRandomColor();
+let playerColor2 = getRandomColor2();
 
 const state = {};
 const clientRooms = {};
 
 function getRandomColor() {
+  // Generate a random hexadecimal value
+  var color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+
+  return color;
+}
+
+function getRandomColor2() {
   // Generate a random hexadecimal value
   var color = "#" + Math.floor(Math.random() * 16777215).toString(16);
 
@@ -20,10 +28,16 @@ io.on("connection", (client) => {
   client.on("joinGame", handleJoinGame);
 
   client.emit("randomColor", playerColor);
+  client.emit("randomColor2", playerColor2);
 
   io.on("disconnect", () => {
     playerColor = getRandomColor();
     io.emit("randomColor", playerColor); // Broadcast warna acak ke semua client
+  });
+
+  io.on("disconnect", () => {
+    playerColor2 = getRandomColor2();
+    io.emit("randomColor2", playerColor2); // Broadcast warna acak ke semua client
   });
 
   function handleJoinGame(roomName) {

@@ -1,8 +1,7 @@
 const BG_COLOUR = "#231f20";
-// const PLAYER1_COLOUR = "blue";
-// const PLAYER2_COLOUR = "red";
 const FOOD_COLOUR = "#e66916";
 let playerColor;
+let playerColor2;
 
 function getRandomColor() {
   // Generate a random hexadecimal value
@@ -27,6 +26,14 @@ for (var i = 0; i < 2; i++) {
 
 const socket = io("http://localhost:3000");
 
+function handleRandomColor(color) {
+  playerColor = color;
+}
+
+function handleRandomColor2(color2) {
+  playerColor2 = color2;
+}
+
 const PLAYER1_COLOUR = getRandomColor();
 const PLAYER2_COLOUR = getRandomColor2();
 socket.on("init", handleInit);
@@ -35,9 +42,8 @@ socket.on("gameOver", handleGameOver);
 socket.on("gameCode", handleGameCode);
 socket.on("unknownGame", handleUnknownGame);
 socket.on("tooManyPlayers", handleTooManyPlayers);
-socket.on("randomColor", (color) => {
-  playerColor = color;
-});
+socket.on("randomColor", handleRandomColor);
+socket.on("randomColor2", handleRandomColor2);
 
 const gameScreen = document.getElementById("gameScreen");
 const initialScreen = document.getElementById("initialScreen");
@@ -110,8 +116,7 @@ function paintGame(state) {
   ctx.fillRect(food.x * size, food.y * size, size, size);
 
   drawPlayer(state.players[0], size, playerColor);
-  drawPlayer2(state.players[1], size, playerColor);
-  console.log(playerColor);
+  drawPlayer2(state.players[1], size, playerColor2);
 }
 
 function drawPlayer(state, size, color) {
@@ -136,6 +141,9 @@ function handleGameOver(data) {
   if (!gameActive) {
     return;
   }
+  socket.removeListener("randomColor", handleRandomColor);
+  socket.removeListener("randomColor2", handleRandomColor2);
+  console.log("listener telah dihapus");
   data = JSON.parse(data);
 
   if (data.winner === playerNumber) {
