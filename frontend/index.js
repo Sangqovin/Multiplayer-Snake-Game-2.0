@@ -5,16 +5,12 @@ let playerColor;
 let playerColor2;
 
 function getRandomColor() {
-  // Generate a random hexadecimal value
   var color = "#" + Math.floor(Math.random() * 16777215).toString(16);
-
   return color;
 }
 
 function getRandomColor2() {
-  // Generate a random hexadecimal value
   var color = "#" + Math.floor(Math.random() * 16777215).toString(16);
-
   return color;
 }
 
