@@ -12,6 +12,7 @@ function getRandomColor() {
 
   return color;
 }
+
 function getRandomColor2() {
   // Generate a random hexadecimal value
   var color = "#" + Math.floor(Math.random() * 16777215).toString(16);
@@ -27,8 +28,8 @@ io.on("connection", (client) => {
   const player1Color = getRandomColor();
   const player2Color = getRandomColor2();
 
-  // client.emit("playerColor", { playerId: 0, color: player1Color });
-  // client.emit("playerColor", { playerId: 1, color: player2Color });
+  client.emit("playerColor", { playerId: 0, color: player1Color });
+  client.emit("playerColor2", { playerId: 1, color: player2Color });
 
   function handleJoinGame(roomName) {
     const room = io.sockets.adapter.rooms[roomName];

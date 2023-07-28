@@ -17,10 +17,6 @@ function getRandomColor2() {
   return color;
 }
 
-// Usage
-// var PLAYER1_COLOUR = "#FFFFFF"; // getRandomColor();
-// var PLAYER2_COLOUR = getRandomColor2();
-
 const socket = io("http://localhost:3000");
 
 socket.on("init", handleInit);
@@ -29,6 +25,8 @@ socket.on("gameOver", handleGameOver);
 socket.on("gameCode", handleGameCode);
 socket.on("unknownGame", handleUnknownGame);
 socket.on("tooManyPlayers", handleTooManyPlayers);
+socket.on("playerColor", handlePlayerColor);
+socket.on("playerColor2", handlePlayerColor2);
 
 const gameScreen = document.getElementById("gameScreen");
 const initialScreen = document.getElementById("initialScreen");
@@ -46,6 +44,9 @@ function newGame() {
 }
 
 function joinGame() {
+  if (gameCodeInput.value === "") {
+    return;
+  }
   const code = gameCodeInput.value;
   socket.emit("joinGame", code);
   init();
@@ -85,14 +86,14 @@ function paintGame(state) {
   ctx.fillStyle = FOOD_COLOUR;
   ctx.fillRect(food.x * size, food.y * size, size, size);
 
-  paintPlayer(state.players[0], size, PLAYER1_COLOUR);
-  paintPlayer(state.players[1], size, PLAYER2_COLOUR);
+  // paintPlayer(0);
+  // paintPlayer(1);
 
-  socket.on("playerColor", (data) => {
-    const { playerId, color } = data;
-    state.players[playerId].color = color;
-    paintGame(state);
-  });
+  // socket.on("playerColor", (data) => {
+  //   const { playerId, color } = data;
+  //   state.players[playerId].color = color;
+  //   paintGame(state);
+  // });
 }
 
 function paintPlayer(playerState, size, colour) {
@@ -102,6 +103,23 @@ function paintPlayer(playerState, size, colour) {
   for (let cell of snake) {
     ctx.fillRect(cell.x * size, cell.y * size, size, size);
   }
+  // socket.on("playerColor", (handlePlayerColor) => {
+  //   console.log(data.color);
+  //   paintPlayer(state.players[0], size, data.color);
+  // });
+
+  // socket.on("playerColor2", (data) => {
+  //   console.log(data.color);
+  //   paintPlayer(state.players[1], size, data.color);
+  // });
+}
+
+function handlePlayerColor(data) {
+  paintPlayer(state.players[0], size, data.color);
+}
+
+function handlePlayerColor2(data) {
+  paintPlayer(state.players[1], size, data.color);
 }
 
 function handleInit(number) {

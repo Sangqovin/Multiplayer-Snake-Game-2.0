@@ -51,7 +51,8 @@ function createGameState() {
   };
 }
 
-function gameLoop(state) {
+function gameLoop(state, keyCode) {
+  const velocity = keyCode;
   if (!state) {
     return;
   }
@@ -101,7 +102,11 @@ function gameLoop(state) {
 
   if (playerOne.vel.x || playerOne.vel.y) {
     for (let cell of playerOne.snake) {
-      if (cell.x === playerOne.pos.x && cell.y === playerOne.pos.y) {
+      if (
+        cell.x === playerOne.pos.x &&
+        cell.y === playerOne.pos.y &&
+        playerOne.vel.x !== 0
+      ) {
         return 2;
       }
     }
