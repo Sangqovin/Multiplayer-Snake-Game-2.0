@@ -5,7 +5,7 @@
     "socket.io": "2.3.0"
   },
   "scripts": {
-    "git": "git add . && git commit -m 'main' && git push"
+    "git": "git add . && git commit -m main && git push"
   },
   "main": "server.js"
 }
