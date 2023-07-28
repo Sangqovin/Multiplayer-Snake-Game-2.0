@@ -23,7 +23,7 @@ function handleRandomColor(color) {
 }
 
 function handleRandomColor2(color2) {
-  playerColor2 = color2;
+  playerColor2 = color2
 }
 
 io.on("connection", (client) => {
