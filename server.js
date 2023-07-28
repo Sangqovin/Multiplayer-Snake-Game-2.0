@@ -2,24 +2,28 @@ const io = require("socket.io")();
 const { initGame, gameLoop, getUpdatedVelocity } = require("./backend/game");
 const { FRAME_RATE } = require("./backend/constants");
 const { makeid } = require("./backend/utils");
-let playerColor = getRandomColor();
-let playerColor2 = getRandomColor2();
+let playerColor;
+let playerColor2;
 
 const state = {};
 const clientRooms = {};
 
 function getRandomColor() {
-  // Generate a random hexadecimal value
   var color = "#" + Math.floor(Math.random() * 16777215).toString(16);
-
   return color;
 }
 
 function getRandomColor2() {
-  // Generate a random hexadecimal value
   var color = "#" + Math.floor(Math.random() * 16777215).toString(16);
-
   return color;
+}
+
+function handleRandomColor(color) {
+  playerColor = color;
+}
+
+function handleRandomColor2(color2) {
+  playerColor2 = color2;
 }
 
 io.on("connection", (client) => {
@@ -27,17 +31,14 @@ io.on("connection", (client) => {
   client.on("newGame", handleNewGame);
   client.on("joinGame", handleJoinGame);
 
-  client.emit("randomColor", playerColor);
-  client.emit("randomColor2", playerColor2);
+  client.emit("randomColor", handleRandomColor);
+  client.emit("randomColor2", handleRandomColor2);
 
-  io.on("disconnect", () => {
+  client.on("disconnect", () => {
     playerColor = getRandomColor();
-    io.emit("randomColor", playerColor); // Broadcast warna acak ke semua client
-  });
-
-  io.on("disconnect", () => {
     playerColor2 = getRandomColor2();
-    io.emit("randomColor2", playerColor2); // Broadcast warna acak ke semua client
+    io.emit("randomColor2", playerColor2);
+    io.emit("randomColor", playerColor);
   });
 
   function handleJoinGame(roomName) {

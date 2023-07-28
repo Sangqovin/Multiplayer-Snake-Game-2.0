@@ -1,3 +1,4 @@
+const socket = io("http://localhost:3000");
 const BG_COLOUR = "#231f20";
 const FOOD_COLOUR = "#e66916";
 let playerColor;
@@ -17,15 +18,6 @@ function getRandomColor2() {
   return color;
 }
 
-const randomColorsArray = [];
-
-for (var i = 0; i < 2; i++) {
-  const randomColor = getRandomColor();
-  randomColorsArray.push(randomColor);
-}
-
-const socket = io("http://localhost:3000");
-
 function handleRandomColor(color) {
   playerColor = color;
 }
@@ -34,16 +26,12 @@ function handleRandomColor2(color2) {
   playerColor2 = color2;
 }
 
-const PLAYER1_COLOUR = getRandomColor();
-const PLAYER2_COLOUR = getRandomColor2();
 socket.on("init", handleInit);
 socket.on("gameState", handleGameState);
 socket.on("gameOver", handleGameOver);
 socket.on("gameCode", handleGameCode);
 socket.on("unknownGame", handleUnknownGame);
 socket.on("tooManyPlayers", handleTooManyPlayers);
-socket.on("randomColor", handleRandomColor);
-socket.on("randomColor2", handleRandomColor2);
 
 const gameScreen = document.getElementById("gameScreen");
 const initialScreen = document.getElementById("initialScreen");
@@ -100,9 +88,6 @@ function paintPlayer(playerState, size, colour) {
     ctx.fillRect(cell.x * size, cell.y * size, size, size);
   }
 }
-
-const player1color = randomColorsArray[0];
-const player2color = randomColorsArray[1];
 
 function paintGame(state) {
   ctx.fillStyle = BG_COLOUR;
