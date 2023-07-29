@@ -22,8 +22,6 @@ function handleRandomColor2(color2) {
   playerColor2 = color2;
 }
 
-if (playerColor === playerColor2) playerColor2 = getRandomColor2();
-
 socket.on("init", handleInit);
 socket.on("gameState", handleGameState);
 socket.on("gameOver", handleGameOver);
@@ -106,10 +104,12 @@ function paintGame(state) {
 
 function drawPlayer(state, size, color) {
   paintPlayer(state, size, color);
+  // console.log("player 1 color: " + playerColor);
 }
 
 function drawPlayer2(state, size, color) {
   paintPlayer(state, size, color);
+  // console.log("player 2 color: " + playerColor2);
 }
 
 function handleInit(number) {

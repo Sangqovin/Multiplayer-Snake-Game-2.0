@@ -107,6 +107,7 @@ function gameLoop(state, keyCode) {
         cell.y === playerOne.pos.y &&
         playerOne.vel.x !== 0
       ) {
+        console.log(playerOne.vel.x);
         return 2;
       }
     }

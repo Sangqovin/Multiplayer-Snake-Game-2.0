@@ -18,13 +18,13 @@ function getRandomColor2() {
   return color;
 }
 
-function handleRandomColor(color) {
-  playerColor = color;
-}
+// function handleRandomColor(color) {
+//   playerColor = color;
+// }
 
-function handleRandomColor2(color2) {
-  playerColor2 = color2;
-}
+// function handleRandomColor2(color2) {
+//   playerColor2 = color2;
+// }
 
 io.on("connection", (client) => {
   client.on("keydown", handleKeydown);
