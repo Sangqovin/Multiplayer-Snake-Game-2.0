@@ -1,5 +1,4 @@
 const { GRID_SIZE } = require("./constants");
-const { KeyCode } = require("../server");
 
 module.exports = {
   initGame,
@@ -33,7 +32,7 @@ function createGameState() {
       },
       {
         pos: {
-          x: 18,
+          x: 16,
           y: 10,
         },
         vel: {
@@ -41,9 +40,9 @@ function createGameState() {
           y: 0,
         },
         snake: [
-          { x: 20, y: 10 },
-          { x: 19, y: 10 },
           { x: 18, y: 10 },
+          { x: 17, y: 10 },
+          { x: 16, y: 10 },
         ],
       },
     ],
@@ -68,19 +67,19 @@ function gameLoop(state, keyCode) {
   playerTwo.pos.y += playerTwo.vel.y;
 
   if (
-    playerOne.pos.x < -1 ||
-    playerOne.pos.x > GRID_SIZE ||
-    playerOne.pos.y < -1 ||
-    playerOne.pos.y > GRID_SIZE
+    playerOne.pos.x < 0 ||
+    playerOne.pos.x >= GRID_SIZE ||
+    playerOne.pos.y < 0 ||
+    playerOne.pos.y >= GRID_SIZE
   ) {
     return 2;
   }
 
   if (
-    playerTwo.pos.x < -1 ||
-    playerTwo.pos.x > GRID_SIZE ||
-    playerTwo.pos.y < -1 ||
-    playerTwo.pos.y > GRID_SIZE
+    playerTwo.pos.x < 0 ||
+    playerTwo.pos.x >= GRID_SIZE ||
+    playerTwo.pos.y < 0 ||
+    playerTwo.pos.y >= GRID_SIZE
   ) {
     return 1;
   }
@@ -101,15 +100,14 @@ function gameLoop(state, keyCode) {
   }
   //
 
-  console.log(KeyCode);
   if (playerOne.vel.x || playerOne.vel.y) {
     for (let cell of playerOne.snake) {
       if (
         cell.x === playerOne.pos.x &&
         cell.y === playerOne.pos.y &&
-        playerOne.vel.x !== 0
+        playerOne.vel.x !== 0 &&
+        playerOne.vel.y !== 0
       ) {
-        console.log(playerOne.vel.x);
         return 2;
       }
     }

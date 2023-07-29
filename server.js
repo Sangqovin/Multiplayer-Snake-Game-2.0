@@ -87,7 +87,6 @@ io.on("connection", (client) => {
 
   function handleKeydown(keyCode) {
     const roomName = clientRooms[client.id];
-    console.log(keyCode);
     if (!roomName) {
       return;
     }
@@ -107,7 +106,6 @@ io.on("connection", (client) => {
         return;
       }
     }
-    keyCode = KeyCode;
   }
 });
 
