@@ -1,4 +1,5 @@
 const { GRID_SIZE } = require("./constants");
+const { KeyCode } = require("../server");
 
 module.exports = {
   initGame,
@@ -100,6 +101,7 @@ function gameLoop(state, keyCode) {
   }
   //
 
+  console.log(KeyCode);
   if (playerOne.vel.x || playerOne.vel.y) {
     for (let cell of playerOne.snake) {
       if (

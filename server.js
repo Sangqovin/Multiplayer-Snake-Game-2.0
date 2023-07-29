@@ -4,6 +4,7 @@ const { FRAME_RATE } = require("./backend/constants");
 const { makeid } = require("./backend/utils");
 let playerColor = getRandomColor();
 let playerColor2 = getRandomColor2();
+let KeyCode;
 
 const state = {};
 const clientRooms = {};
@@ -86,6 +87,7 @@ io.on("connection", (client) => {
 
   function handleKeydown(keyCode) {
     const roomName = clientRooms[client.id];
+    console.log(keyCode);
     if (!roomName) {
       return;
     }
@@ -105,6 +107,7 @@ io.on("connection", (client) => {
         return;
       }
     }
+    keyCode = KeyCode;
   }
 });
 
@@ -134,3 +137,7 @@ function emitGameOver(room, winner) {
 io.listen(3000);
 
 console.log("Ready!");
+
+module.exports = {
+  KeyCode,
+};
