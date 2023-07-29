@@ -34,13 +34,13 @@ io.on("connection", (client) => {
   client.emit("randomColor", playerColor);
   client.emit("randomColor2", playerColor2);
 
-  client.on("disconnect", () => {
-    playerColor = getRandomColor();
-    playerColor2 = getRandomColor2();
+  // client.on("disconnect", () => {
+  //   playerColor = getRandomColor();
+  //   playerColor2 = getRandomColor2();
 
-    io.emit("randomColor", playerColor);
-    io.emit("randomColor2", playerColor2);
-  });
+  //   io.emit("randomColor", playerColor);
+  //   io.emit("randomColor2", playerColor2);
+  // });
 
   function handleJoinGame(roomName) {
     const room = io.sockets.adapter.rooms[roomName];

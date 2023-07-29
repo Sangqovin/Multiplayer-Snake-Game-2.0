@@ -22,6 +22,8 @@ function handleRandomColor2(color2) {
   playerColor2 = color2;
 }
 
+if (playerColor === playerColor2) playerColor2 = getRandomColor2();
+
 socket.on("init", handleInit);
 socket.on("gameState", handleGameState);
 socket.on("gameOver", handleGameOver);
@@ -126,7 +128,6 @@ function handleGameOver(data) {
   }
   socket.removeListener("randomColor", handleRandomColor);
   socket.removeListener("randomColor2", handleRandomColor2);
-  console.log("listener telah dihapus");
   data = JSON.parse(data);
 
   if (data.winner === playerNumber) {
